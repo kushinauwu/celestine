@@ -694,13 +694,37 @@ textarea {
     position: relative;
     margin: auto 20px;
     font-size: 20px;
-    transition: 0.3s ease-in-out;
+    transition: 0.5s ease-in-out;
 }
 
-.main-navigation li:hover,
-.main-navigation li:active {
-    background-color: lightsteelblue;
-    border-radius: 10px 0;
+.main-navigation li,
+.main-navigation li:after,
+.main-navigation li:before {
+    transition: all 0.5s;
+}
+
+.main-navigation li:after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    content: '';
+    width: 0%;
+    background-color: lightblue;
+    height: 1px;
+}
+
+.main-navigation li:hover:after {
+    width: 100%;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #2A447E;
+}
+
+.main-navigation .dropdown-item {
+    color: #2A447E;
 }
 
 .main-navigation a {
