@@ -648,7 +648,6 @@ textarea {
 .main-navigation {
     clear: both;
     display: block;
-    float: left;
     width: 100%;
     background-color: white;
     margin-bottom: 20px;
@@ -720,20 +719,27 @@ textarea {
 }
 
 .navbar-light .navbar-nav .nav-link {
-    color: #2A447E;
+    color: #65B6FF;
 }
 
 .main-navigation .dropdown-item {
+    color: #65B6FF;
+}
+
+.navbar-light .navbar-nav .nav-link:hover,
+.main-navigation .dropdown-item:hover {
     color: #2A447E;
 }
 
 .main-navigation a {
     display: block;
     text-decoration: none;
+    font-family: 'Coda', cursive;
 }
 
 .main-navigation a:hover {
     background-color: transparent;
+
 }
 
 /* Small menu. */
@@ -742,8 +748,12 @@ textarea {
     display: block;
 }
 
-.site-branding {
+#site-header {
     text-align: center;
+}
+
+#site-header img {
+    width: 100%;
 }
 
 @media screen and (min-width: 37.5em) {
