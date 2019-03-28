@@ -128,7 +128,7 @@ function celestine_scripts() {
     
     wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.css', array(), '4.3.1' );
     
-    wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Coda', false);
+    wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Coda|Raleway|Forum', false);
     
 	wp_enqueue_style( 'celestine-style', get_stylesheet_uri() );
 
