@@ -562,6 +562,19 @@ table {
     width: 100%;
 }
 
+.container-fluid {}
+
+/*article {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #8495a8;
+}*/
+
+.latest-post article,
+.recent-post article {
+    border: 0;
+    padding-bottom: 0;
+}
+
 /*--------------------------------------------------------------
 # buttons and inputs
 --------------------------------------------------------------*/
@@ -940,6 +953,44 @@ textarea {
 .page-links {
     clear: both;
     margin: 0 0 1.5em;
+}
+
+.recent-post {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.latest-post h1,
+.recent-post h1 {
+    text-align: center;
+}
+
+.recent-post .post-display {
+    margin: 30px 10px;
+    border-bottom: 1px solid #8495a8;
+}
+
+.date {
+    text-align: center;
+    padding: 0;
+}
+
+a.moretag {
+    border: 1px solid #2a447e;
+    padding: 10px;
+    margin: 30px auto;
+    display: table;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+a.moretag:hover {
+    background-color: #2a447e;
+    color: #f0f5f4;
+}
+
+.site-info {
+    text-align: center;
 }
 
 /*--------------------------------------------------------------

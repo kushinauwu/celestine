@@ -44,7 +44,7 @@ get_header();
             </header><!-- #masthead -->
 
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-8 blog-main">
                     <?php // latest post
          $query = new WP_query ( array(
              'posts_per_page' => 1,
@@ -64,7 +64,15 @@ get_header();
                                         <?php the_title(); ?>
                                     </h1>
                                 </a>
-                                <?php the_post_thumbnail(); ?>
+                                <p class="date">
+                                    <?php echo get_the_date(); ?>
+                                </p>
+                                <?php if ( has_post_thumbnail() ) {
+                                the_post_thumbnail();
+                                }
+                                else { ?>
+                                <img src="<?php echo get_first_image(); ?>">
+                                <?php } ?>
                                 <div class="post-content">
 
                                     <p>
@@ -82,47 +90,60 @@ get_header();
                 wp_reset_postdata(); ?>
                     </section>
 
+                    <?php 
+                    $custom_query_args = array( 
+                                                'post_type' => 'post',
+                                                'post_status' => 'publish',
+                                                'posts_per_page' => 4,
+                                                'offset' => 1 );
+                    // Get current page and append to custom query parameters array
+                    $custom_query_args['paged'] = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
 
+                    // Instantiate custom query
+                    $custom_query = new WP_Query( $custom_query_args );
 
-                    <?php $query = new WP_query ( array(
-            'post_type' => 'post',
-            'post_status' => 'publish',
-    'posts_per_page' => 3,
-            'offset' => 1
-        ) );
-        
-        if ( $query->have_posts() ) ?>
+                    // Pagination fix
+                    $temp_query = $wp_query;
+                    $wp_query   = NULL;
+                    $wp_query   = $custom_query;
+
+                    // Output custom query loop
+                    if ( $custom_query->have_posts() ) : ?>
                     <section class="recent-post">
-                        <?php while ( $query->have_posts() ) : $query->the_post(); ?>
-
+                        <?php while ( $custom_query->have_posts() ) : $custom_query->the_post(); ?>
                         <article id="post-<?php the_ID(); ?>">
                             <div class="post-display">
-
                                 <a href="<?php the_permalink(); ?>">
-                                    <h2>
+                                    <h1>
                                         <?php the_title(); ?>
-                                    </h2>
+                                    </h1>
                                 </a>
-                                <?php the_post_thumbnail(); ?>
+                                <p class="date">
+                                    <?php echo get_the_date(); ?>
+                                </p>
+                                <?php
+                                        if ( has_post_thumbnail() ) {
+                                            the_post_thumbnail();
+                                        }
+                                        else { ?>
+                                <img src="<?php echo get_first_image(); ?>">
+                                <?php } ?>
                                 <div class="post-content">
-                                    <p class="date"> [
-                                        <?php the_date(); ?> ]</p>
+
                                     <p>
                                         <?php the_excerpt(); ?>
                                     </p>
                                 </div>
-
                             </div>
                         </article>
-                        <?php endwhile; 
-                                     rewind_posts();
-                                     ?>
-                        <?php 
-                                     
-                wp_reset_postdata(); ?>
+                        <?php endwhile; ?>
                     </section>
+                    <?php endif;
+                    wp_reset_postdata(); 
+                    $wp_query = NULL;
+                    $wp_query = $temp_query; ?>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-3 offset-lg-1 blog-sidebar">
                     <?php get_sidebar(); ?>
                 </div>
             </div>

@@ -142,6 +142,26 @@ function celestine_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'celestine_scripts' );
 
+// Get first image
+function get_first_image() {
+global $post, $posts;
+$first_image = '';
+ob_start();
+ob_end_clean();
+$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
+$first_image = $matches [1] [0];
+
+return $first_image;
+}
+
+
+// Replaces the excerpt "Read More" text by a link
+function new_excerpt_more($more) {
+       global $post;
+	return '<a class="moretag" href="'. get_permalink($post->ID) . '"> Read the full article </a>';
+}
+add_filter('excerpt_more', 'new_excerpt_more');
+
 /**
  * Implement the Custom Header feature.
  */
