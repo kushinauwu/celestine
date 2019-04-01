@@ -10,21 +10,23 @@
 get_header();
 ?>
 
-	<section id="primary" class="content-area">
-		<main id="main" class="site-main">
+<section id="primary" class="content-area">
+    <main id="main" class="site-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 blog-main">
+                    <?php if ( have_posts() ) : ?>
 
-		<?php if ( have_posts() ) : ?>
-
-			<header class="page-header">
-				<h1 class="page-title">
-					<?php
+                    <header class="page-header">
+                        <h1 class="page-title">
+                            <?php
 					/* translators: %s: search query. */
 					printf( esc_html__( 'Search Results for: %s', 'celestine' ), '<span>' . get_search_query() . '</span>' );
 					?>
-				</h1>
-			</header><!-- .page-header -->
+                        </h1>
+                    </header><!-- .page-header -->
 
-			<?php
+                    <?php
 			/* Start the Loop */
 			while ( have_posts() ) :
 				the_post();
@@ -46,10 +48,14 @@ get_header();
 
 		endif;
 		?>
-
-		</main><!-- #main -->
-	</section><!-- #primary -->
+                </div>
+                <div class="col-lg-3 offset-lg-1 blog-sidebar">
+                    <?php get_sidebar(); ?>
+                </div>
+            </div>
+        </div>
+    </main><!-- #main -->
+</section><!-- #primary -->
 
 <?php
-get_sidebar();
 get_footer();
