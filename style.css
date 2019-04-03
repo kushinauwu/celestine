@@ -306,6 +306,7 @@ textarea {
     /* 1 */
     padding: 0;
     /* 2 */
+    margin: auto 5px;
 }
 
 /**
@@ -417,7 +418,7 @@ h6 {
 }
 
 p {
-    margin-bottom: 1.5em;
+    margin-bottom: 1rem;
 }
 
 a {
@@ -451,8 +452,21 @@ i {
     font-style: italic;
 }
 
+cite {
+    color: #747b92;
+}
+
 blockquote {
-    margin: 0 1.5em;
+    margin: 0 1.5em 1em;
+    box-shadow: 0px 0px 9px 0px #8495a8;
+    border-left: 10px solid #65b6ff;
+    border-right: 2px solid #65b6ff;
+    padding: 5px 10px;
+}
+
+blockquote p {
+    font-weight: bold;
+    color: #2a447e;
 }
 
 address {
@@ -521,7 +535,7 @@ hr {
 
 ul,
 ol {
-    margin: 0 0 1.5em 3em;
+    margin: 0 0 1.5em 2em;
 }
 
 ul {
@@ -555,6 +569,7 @@ img {
 figure {
     margin: 1em 0;
     /* Extra wide images within figure tags don't overflow the content area. */
+    text-align: center;
 }
 
 table {
@@ -582,22 +597,23 @@ button,
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {
-    border: 1px solid;
-    border-color: #ccc #ccc #bbb;
-    border-radius: 3px;
-    background: #e6e6e6;
+    border: 2px solid #747b92;
     color: rgba(0, 0, 0, 0.8);
     font-size: 12px;
-    font-size: 0.75rem;
+    font-size: 1rem;
     line-height: 1;
-    padding: .6em 1em .4em;
+    background: #f0f5f4;
+    padding: 0.6rem 1rem;
+    transition: all 0.3s ease-in-out;
 }
 
 button:hover,
 input[type="button"]:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover {
-    border-color: #ccc #bbb #aaa;
+    border-color: #65b6ff;
+    background: #2a447e;
+    color: #f0f5f4;
 }
 
 button:active,
@@ -631,6 +647,7 @@ textarea {
     border: 1px solid #ccc;
     border-radius: 3px;
     padding: 3px;
+    text-align: center;
 }
 
 input[type="text"]:focus,
@@ -788,6 +805,14 @@ textarea {
 
 .site-branding {
     text-align: center;
+}
+
+.entry-header {
+    text-align: center;
+}
+
+.entry-meta {
+    margin-bottom: 5px;
 }
 
 
@@ -967,7 +992,7 @@ textarea {
 
 .recent-post .post-display {
     margin: 30px 10px;
-    border-bottom: 1px solid #8495a8;
+    border-bottom: 1px solid #f0f5f4;
 }
 
 .date {
@@ -993,8 +1018,9 @@ a.moretag:hover {
     text-align: center;
 }
 
+
 /*--------------------------------------------------------------
-## Comments
+## Comments and admin stuff
 --------------------------------------------------------------*/
 .comment-content a {
     word-wrap: break-word;
@@ -1002,6 +1028,22 @@ a.moretag:hover {
 
 .bypostauthor {
     display: block;
+}
+
+span.edit-link,
+span.comments-link {
+    margin: auto 30px;
+}
+
+ol.comment-list {
+    list-style: none;
+}
+
+footer.entry-footer {
+    text-align: center;
+    border-top: 1px solid #f0f5f4;
+    border-bottom: 1px solid #f0f5f4;
+    padding: 10px 0;
 }
 
 /*--------------------------------------------------------------
