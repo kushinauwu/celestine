@@ -13,7 +13,70 @@
 function celestine_customize_register( $wp_customize ) {
 	$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
 	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
+    
+    // color scheme
 	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
+    
+    $wp_customize->add_section('textcolors', array('title' => 'Color Scheme',));
+    
+    // primary / site title, headings, nav links, blockquote border, footer
+    $txtcolors[] = array(
+        'slug' => 'color_scheme_1',
+        'default' => '#65B6FF',
+        'label' => 'Primary Color'
+    );
+    
+    // secondary / site description, sidebar headings, nav links on hover, button bg-border
+    $txtcolors[] = array(
+        'slug' => 'color_scheme_2',
+        'default' => '#2A447E',
+        'label' => 'Secondary Color'
+    );
+    
+    // link color
+    $txtcolors[] = array(
+        'slug' => 'link_color',
+        'default' => '#65B6FF',
+        'label' => 'Link Color'
+    );
+    
+    // link hover color
+    $txtcolors[] = array(
+        'slug' => 'link_color_hover',
+        'default' => '#2A447E',
+        'label' => 'Link Hover Color'
+    );
+    
+    // text color
+    $txtcolors[] = array(
+        'slug' => 'text_color',
+        'default' => '#000',
+        'label' => 'Text Color'
+    );
+    
+    // add the settings and controls for each color
+foreach( $txtcolors as $txtcolor ) {
+ 
+    // SETTINGS
+    $wp_customize->add_setting(
+        $txtcolor['slug'], array(
+            'default' => $txtcolor['default'],
+            'type' => 'option', 
+            'capability' =>  'edit_theme_options'
+        )
+    ); 
+    
+    // CONTROLS
+$wp_customize->add_control(
+    new WP_Customize_Color_Control(
+        $wp_customize,
+        $txtcolor['slug'], 
+        array('label' => $txtcolor['label'], 
+        'section' => 'textcolors',
+        'settings' => $txtcolor['slug'])
+    )
+);
+}
 
 	if ( isset( $wp_customize->selective_refresh ) ) {
 		$wp_customize->selective_refresh->add_partial( 'blogname', array(
@@ -27,6 +90,112 @@ function celestine_customize_register( $wp_customize ) {
 	}
 }
 add_action( 'customize_register', 'celestine_customize_register' );
+
+/**
+ * Generate CSS based on user defined color scheme
+ */
+function celestine_customize_colors() {
+     // primary color
+    $color_scheme_1 = get_option( 'color_scheme_1' );
+
+    // secondary color
+    $color_scheme_2 = get_option( 'color_scheme_2' );
+
+    // link color
+    $link_color = get_option( 'link_color' );
+
+    // hover or active link color
+    $hover_link_color = get_option( 'link_color_hover' );
+    
+    // text color
+    $text_color = get_option( 'text_color' );
+    
+    ?>
+<style>
+    /* color scheme */
+
+    /* primary color */
+    .site-title a,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .navbar-light .navbar-nav .nav-link,
+    .main-navigation .dropdown-item,
+    footer h3 {
+        color: <?php echo $color_scheme_1;
+        ?>;
+    }
+
+    blockquote {
+        border-left-color: <?php echo $color_scheme_1;
+        ?>;
+        border-right-color: <?php echo $color_scheme_1;
+        ?>;
+    }
+
+    button:hover,
+    input[type="button"]:hover,
+    input[type="reset"]:hover,
+    input[type="submit"]:hover {
+        border-color: <?php echo $color_scheme_1;
+        ?>;
+    }
+
+    .main-navigation li:after {
+        background-color: <?php echo $color_scheme_1;
+        ?>;
+    }
+
+    /* secondary color */
+    .site-description,
+    .blog-sidebar h2,
+    .navbar-light .navbar-nav .nav-link:hover,
+    .main-navigation .dropdown-item:hover,
+    .navbar-light .navbar-nav .active .nav-link,
+    blockquote p,
+    a.moretag {
+        color: <?php echo $color_scheme_2;
+        ?>;
+    }
+
+    button:hover,
+    input[type="button"]:hover,
+    input[type="reset"]:hover,
+    input[type="submit"]:hover,
+    a.moretag:hover {
+        background: <?php echo $color_scheme_2;
+        ?>;
+    }
+
+    /* links color */
+    a {
+        color: <?php echo $link_color;
+        ?>;
+    }
+
+    /* hover links color */
+    a:hover,
+    a:active,
+    a:visited {
+        color: <?php echo $hover_link_color;
+        ?>;
+    }
+
+    /* text color */
+    body {
+        color: <?php echo $text_color;
+        ?>;
+    }
+
+</style>
+
+<?php
+}
+add_action( 'wp_head', 'celestine_customize_colors' );
+
 
 /**
  * Render the site title for the selective refresh partial.

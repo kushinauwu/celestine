@@ -117,6 +117,15 @@ function celestine_widgets_init() {
 		'before_title'  => '<h2 class="widget-title">',
 		'after_title'   => '</h2>',
 	) );
+    register_sidebar( array(
+		'name'          => esc_html__( 'Author information', 'celestine' ),
+		'id'            => 'author-info',
+		'description'   => esc_html__( 'Add widgets here.', 'celestine' ),
+		'before_widget' => '<div class="author-info">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h2 class="widget-title">',
+		'after_title'   => '</h2>',
+	) );
 }
 add_action( 'widgets_init', 'celestine_widgets_init' );
 
@@ -130,7 +139,7 @@ function celestine_scripts() {
     
     wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Coda|Raleway|Forum', false);
     
-	wp_enqueue_style( 'celestine-style', get_stylesheet_uri() );
+    wp_enqueue_style( 'celestine-style', get_stylesheet_uri() );
 
 	wp_enqueue_script( 'celestine-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
 
@@ -142,7 +151,9 @@ function celestine_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'celestine_scripts' );
 
-// Get first image
+/**
+ * Get first image of a post. This will be used to display the first imag of the post if a featured image is not given.
+ */
 function get_first_image() {
 global $post, $posts;
 $first_image = '';
@@ -155,7 +166,9 @@ return $first_image;
 }
 
 
-// Replaces the excerpt "Read More" text by a link
+/**
+ * Replaces the excerpt "Read More" text by a link
+ */
 function new_excerpt_more($more) {
        global $post;
 	return '<a class="moretag" href="'. get_permalink($post->ID) . '"> Read the full article </a>';
@@ -181,6 +194,13 @@ require get_template_directory() . '/inc/template-functions.php';
  * Customizer additions.
  */
 require get_template_directory() . '/inc/customizer.php';
+
+function my_customize_register() {     
+global $wp_customize;
+$wp_customize->remove_section( 'colors' );  //Modify this line as needed  
+} 
+
+add_action( 'customize_register', 'my_customize_register', 11 );
 
 /**
  * Register custom navigation walker

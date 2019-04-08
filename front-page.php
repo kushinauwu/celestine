@@ -113,14 +113,7 @@ get_header();
                         <?php while ( $custom_query->have_posts() ) : $custom_query->the_post(); ?>
                         <article id="post-<?php the_ID(); ?>">
                             <div class="post-display">
-                                <a href="<?php the_permalink(); ?>">
-                                    <h1>
-                                        <?php the_title(); ?>
-                                    </h1>
-                                </a>
-                                <p class="date">
-                                    <?php echo get_the_date(); ?>
-                                </p>
+
                                 <?php
                                         if ( has_post_thumbnail() ) {
                                             the_post_thumbnail();
@@ -129,7 +122,14 @@ get_header();
                                 <img src="<?php echo get_first_image(); ?>">
                                 <?php } ?>
                                 <div class="post-content">
-
+                                    <a href="<?php the_permalink(); ?>">
+                                        <h1>
+                                            <?php the_title(); ?>
+                                        </h1>
+                                    </a>
+                                    <p class="date">
+                                        <?php echo get_the_date(); ?>
+                                    </p>
                                     <p>
                                         <?php the_excerpt(); ?>
                                     </p>
@@ -142,6 +142,20 @@ get_header();
                     wp_reset_postdata(); 
                     $wp_query = NULL;
                     $wp_query = $temp_query; ?>
+
+                    <?php
+		while ( have_posts() ) :
+			the_post();
+
+			get_template_part( 'template-parts/content', 'page' );
+
+			// If comments are open or we have at least one comment, load up the comment template.
+			if ( comments_open() || get_comments_number() ) :
+				comments_template();
+			endif;
+
+		endwhile; // End of the loop.
+		?>
                 </div>
                 <div class="col-lg-3 offset-lg-1 blog-sidebar">
                     <?php get_sidebar(); ?>
