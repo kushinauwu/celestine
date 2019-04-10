@@ -1,6 +1,6 @@
 === celestine ===
 
-Contributors: automattic
+Contributors: automattic, kushinauwu
 Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
 
 Requires at least: 4.5
@@ -29,7 +29,7 @@ celestine includes support for Infinite Scroll in Jetpack.
 
 == Changelog ==
 
-= 1.0 - May 12 2015 =
+= 1.0 - April 08 2019 =
 * Initial release
 
 == Credits ==

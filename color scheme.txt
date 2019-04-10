@@ -1,0 +1,39 @@
+colors
+
+textarea : 404040
+
+a : 65b6ff
+a visited,hover : 2a447e
+a.moretag: 2a447e
+a.moretag hover : f0f5f4, bg: f0f5f4
+
+cite : 747b92
+blokquote p: 2a447e
+blockquote border : 65b6ff
+
+button bg: #f0f5f4, border : 747b92
+button hover border: 65b6ff, bg: 2a447e, color: f0f5f4
+
+nav link: 65b6ff
+navbar hover: 2a447e
+
+site-branding aka title and info border-bottom : f0f5f4
+
+.recent-post post-display border bottom: f0f5f4
+
+footer.entry-footer border top and bottom : f0f5f4
+
+
+colors: 
+text color
+
+primary // title, headings, nav links, blockquote border, footer : 65b6ff
+
+secondary // links visited,hover, more, button bgborder : 2a447e
+
+ternary // bgs, hover text on dark bg: f0f5f4
+
+
+
+
+

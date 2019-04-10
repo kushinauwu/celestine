@@ -1,14 +1,6 @@
 <?php
 /**
  * The front page template file
- *
- * This is the most generic template file in a WordPress theme
- * and one of the two required files for a theme (the other being style.css).
- * It is used to display a page when nothing more specific matches a query.
- * E.g., it puts together the home page when no home.php file exists.
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
- *
  * @package celestine
  */
 
@@ -45,7 +37,8 @@ get_header();
 
             <div class="row">
                 <div class="col-lg-8 blog-main">
-                    <?php // latest post
+                    <?php 
+                    // Show the latest post differently.
          $query = new WP_query ( array(
              'posts_per_page' => 1,
             'post_type' => 'post',
@@ -57,29 +50,27 @@ get_header();
                         <?php while ( $query->have_posts() ) : $query->the_post(); ?>
 
                         <article id="post-<?php the_ID(); ?>">
-                            <div class="post-display">
+                            <div <?php post_class(); ?>>
+                                <div class="post-display">
 
-                                <a href="<?php the_permalink(); ?>">
-                                    <h1>
-                                        <?php the_title(); ?>
-                                    </h1>
-                                </a>
-                                <p class="date">
-                                    <?php echo get_the_date(); ?>
-                                </p>
-                                <?php if ( has_post_thumbnail() ) {
-                                the_post_thumbnail();
-                                }
-                                else { ?>
-                                <img src="<?php echo get_first_image(); ?>">
-                                <?php } ?>
-                                <div class="post-content">
-
-                                    <p>
-                                        <?php the_excerpt(); ?>
+                                    <a href="<?php the_permalink(); ?>">
+                                        <h1>
+                                            <?php the_title(); ?>
+                                        </h1>
+                                    </a>
+                                    <p class="date">
+                                        <?php echo get_the_date(); ?>
                                     </p>
-                                </div>
+                                    <?php if ( has_post_thumbnail() ) {
+                                the_post_thumbnail();
+                                } ?>
+                                    <div class="post-content">
 
+                                        <p>
+                                            <?php the_excerpt(); ?>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </article>
                         <?php endwhile; 
@@ -91,10 +82,11 @@ get_header();
                     </section>
 
                     <?php 
+                    // Offset the custom query by one post and show 6 of the next posts in a different style than the latest post.
                     $custom_query_args = array( 
                                                 'post_type' => 'post',
                                                 'post_status' => 'publish',
-                                                'posts_per_page' => 4,
+                                                'posts_per_page' => 6,
                                                 'offset' => 1 );
                     // Get current page and append to custom query parameters array
                     $custom_query_args['paged'] = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
@@ -118,9 +110,7 @@ get_header();
                                         if ( has_post_thumbnail() ) {
                                             the_post_thumbnail();
                                         }
-                                        else { ?>
-                                <img src="<?php echo get_first_image(); ?>">
-                                <?php } ?>
+                                         ?>
                                 <div class="post-content">
                                     <a href="<?php the_permalink(); ?>">
                                         <h1>
@@ -144,6 +134,7 @@ get_header();
                     $wp_query = $temp_query; ?>
 
                     <?php
+                    // Show the rest of the page contents as edited by the user from the Wordpress console
 		while ( have_posts() ) :
 			the_post();
 

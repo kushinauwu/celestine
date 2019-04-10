@@ -5,78 +5,80 @@
  * @package celestine
  */
 
+
+
+
 /**
  * Add postMessage support for site title and description for the Theme Customizer.
- *
+ * Add color scheme support for changing text colors.
  * @param WP_Customize_Manager $wp_customize Theme Customizer object.
  */
 function celestine_customize_register( $wp_customize ) {
 	$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
 	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
     
-    // color scheme
+    // Color scheme
 	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
     
     $wp_customize->add_section('textcolors', array('title' => 'Color Scheme',));
     
-    // primary / site title, headings, nav links, blockquote border, footer
+    // Primary / site title, headings, nav links, blockquote border, footer
     $txtcolors[] = array(
         'slug' => 'color_scheme_1',
         'default' => '#65B6FF',
         'label' => 'Primary Color'
     );
     
-    // secondary / site description, sidebar headings, nav links on hover, button bg-border
+    // Secondary / site description, sidebar headings, nav links on hover, button bg-border
     $txtcolors[] = array(
         'slug' => 'color_scheme_2',
         'default' => '#2A447E',
         'label' => 'Secondary Color'
     );
     
-    // link color
+    // Link color
     $txtcolors[] = array(
         'slug' => 'link_color',
         'default' => '#65B6FF',
         'label' => 'Link Color'
     );
     
-    // link hover color
+    // Link hover color
     $txtcolors[] = array(
         'slug' => 'link_color_hover',
         'default' => '#2A447E',
         'label' => 'Link Hover Color'
     );
     
-    // text color
+    // Text color
     $txtcolors[] = array(
         'slug' => 'text_color',
         'default' => '#000',
         'label' => 'Text Color'
     );
     
-    // add the settings and controls for each color
-foreach( $txtcolors as $txtcolor ) {
- 
-    // SETTINGS
-    $wp_customize->add_setting(
-        $txtcolor['slug'], array(
-            'default' => $txtcolor['default'],
-            'type' => 'option', 
-            'capability' =>  'edit_theme_options'
-        )
-    ); 
-    
-    // CONTROLS
-$wp_customize->add_control(
-    new WP_Customize_Color_Control(
-        $wp_customize,
-        $txtcolor['slug'], 
-        array('label' => $txtcolor['label'], 
-        'section' => 'textcolors',
-        'settings' => $txtcolor['slug'])
-    )
-);
-}
+    // Add the settings and controls for each color
+    foreach( $txtcolors as $txtcolor ) {
+        $wp_customize->add_setting(
+            $txtcolor['slug'], array(
+                'default' => $txtcolor['default'],
+                'type' => 'option', 
+                'capability' =>  'edit_theme_options',
+                'sanitize_callback' => 'esc_attr',
+
+            )
+        ); 
+
+        $wp_customize->add_control(
+            new WP_Customize_Color_Control(
+                $wp_customize,
+                $txtcolor['slug'], 
+                array('label' => $txtcolor['label'], 
+                'section' => 'textcolors',
+                'settings' => $txtcolor['slug'])
+            )
+        );
+    }
 
 	if ( isset( $wp_customize->selective_refresh ) ) {
 		$wp_customize->selective_refresh->add_partial( 'blogname', array(
@@ -95,26 +97,23 @@ add_action( 'customize_register', 'celestine_customize_register' );
  * Generate CSS based on user defined color scheme
  */
 function celestine_customize_colors() {
-     // primary color
+     // Primary color
     $color_scheme_1 = get_option( 'color_scheme_1' );
 
-    // secondary color
+    // Secondary color
     $color_scheme_2 = get_option( 'color_scheme_2' );
 
-    // link color
+    // Link color
     $link_color = get_option( 'link_color' );
 
-    // hover or active link color
+    // Hover or active link color
     $hover_link_color = get_option( 'link_color_hover' );
     
-    // text color
-    $text_color = get_option( 'text_color' );
-    
+    // Text color
+    $text_color = get_option( 'text_color' );   
     ?>
-<style>
-    /* color scheme */
 
-    /* primary color */
+<style>
     .site-title a,
     h1,
     h2,
@@ -139,7 +138,8 @@ function celestine_customize_colors() {
     button:hover,
     input[type="button"]:hover,
     input[type="reset"]:hover,
-    input[type="submit"]:hover {
+    input[type="submit"]:hover,
+    .sticky {
         border-color: <?php echo $color_scheme_1;
         ?>;
     }
@@ -149,14 +149,14 @@ function celestine_customize_colors() {
         ?>;
     }
 
-    /* secondary color */
     .site-description,
     .blog-sidebar h2,
     .navbar-light .navbar-nav .nav-link:hover,
     .main-navigation .dropdown-item:hover,
     .navbar-light .navbar-nav .active .nav-link,
     blockquote p,
-    a.moretag {
+    a.moretag,
+    .sticky a.moretag:hover {
         color: <?php echo $color_scheme_2;
         ?>;
     }
@@ -165,18 +165,17 @@ function celestine_customize_colors() {
     input[type="button"]:hover,
     input[type="reset"]:hover,
     input[type="submit"]:hover,
-    a.moretag:hover {
-        background: <?php echo $color_scheme_2;
+    a.moretag:hover,
+    .sticky {
+        background-color: <?php echo $color_scheme_2;
         ?>;
     }
 
-    /* links color */
     a {
         color: <?php echo $link_color;
         ?>;
     }
 
-    /* hover links color */
     a:hover,
     a:active,
     a:visited {
@@ -184,7 +183,6 @@ function celestine_customize_colors() {
         ?>;
     }
 
-    /* text color */
     body {
         color: <?php echo $text_color;
         ?>;

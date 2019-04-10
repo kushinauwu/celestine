@@ -1,9 +1,6 @@
 <?php
 /**
  * celestine functions and definitions
- *
- * @link https://developer.wordpress.org/themes/basics/theme-functions/
- *
  * @package celestine
  */
 
@@ -37,8 +34,6 @@ if ( ! function_exists( 'celestine_setup' ) ) :
 
 		/*
 		 * Enable support for Post Thumbnails on posts and pages.
-		 *
-		 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
 		 */
 		add_theme_support( 'post-thumbnails' );
 
@@ -70,9 +65,7 @@ if ( ! function_exists( 'celestine_setup' ) ) :
 
 		/**
 		 * Add support for core custom logo.
-		 *
-		 * @link https://codex.wordpress.org/Theme_Logo
-		 */
+         */
 		add_theme_support( 'custom-logo', array(
 			'height'      => 250,
 			'width'       => 250,
@@ -104,8 +97,6 @@ add_action( 'after_setup_theme', 'celestine_content_width', 0 );
 
 /**
  * Register widget area.
- *
- * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
 function celestine_widgets_init() {
 	register_sidebar( array(
@@ -133,17 +124,17 @@ add_action( 'widgets_init', 'celestine_widgets_init' );
  * Enqueue scripts and styles.
  */
 function celestine_scripts() {
-    wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/bootstrap.js', array( 'jquery' ), '3.3.7', true );
+    wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/assets/js/bootstrap.js', array( 'jquery' ), '3.3.7', true );
     
-    wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.css', array(), '4.3.1' );
+    wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/assets/css/bootstrap.css', array(), '4.3.1' );
     
     wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Coda|Raleway|Forum', false);
     
     wp_enqueue_style( 'celestine-style', get_stylesheet_uri() );
 
-	wp_enqueue_script( 'celestine-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
+	wp_enqueue_script( 'celestine-navigation', get_template_directory_uri() . '/assets/js/navigation.js', array(), '20151215', true );
 
-	wp_enqueue_script( 'celestine-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
+	wp_enqueue_script( 'celestine-skip-link-focus-fix', get_template_directory_uri() . '/assets/js/skip-link-focus-fix.js', array(), '20151215', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -152,8 +143,8 @@ function celestine_scripts() {
 add_action( 'wp_enqueue_scripts', 'celestine_scripts' );
 
 /**
- * Get first image of a post. This will be used to display the first imag of the post if a featured image is not given.
- */
+ * Get first image of a post. This will be used to display the first image of the post if a featured image is not given.
+ 
 function get_first_image() {
 global $post, $posts;
 $first_image = '';
@@ -163,8 +154,21 @@ $output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_cont
 $first_image = $matches [1] [0];
 
 return $first_image;
-}
+}*/
 
+
+// add sticky class on archive templates
+function sticky_archive_class( $classes ) {
+    global $post;
+    if ( is_sticky( $post->ID ) ) {
+        if ( is_front_page() ) {
+            $classes[] = 'sticky';
+        }
+    }
+
+    return $classes;
+}
+add_filter( 'post_class', 'sticky_archive_class' );
 
 /**
  * Replaces the excerpt "Read More" text by a link
@@ -195,11 +199,13 @@ require get_template_directory() . '/inc/template-functions.php';
  */
 require get_template_directory() . '/inc/customizer.php';
 
+/**
+ * Remove the bult in color section as we are using a custom color scheme section
+ */
 function my_customize_register() {     
 global $wp_customize;
-$wp_customize->remove_section( 'colors' );  //Modify this line as needed  
+$wp_customize->remove_section( 'colors' );  
 } 
-
 add_action( 'customize_register', 'my_customize_register', 11 );
 
 /**
