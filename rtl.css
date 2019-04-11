@@ -6,7 +6,7 @@ Version: 1.0.0
 License: GNU General Public License v2 or later
 License URI: LICENSE
 Text Domain: celestine
-Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
+Tags: blog, photography, two-columns, custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready, stickyipost, right-sidebar
 
 This theme, like WordPress, is licensed under the GPL.
 celestine is based on Underscores https://underscores.me/, (C) 2012-2017 Automattic, Inc.
@@ -49,7 +49,6 @@ body {
  */
 
 h1 {
-    font-size: 2em;
     margin: 0.67em 0;
 }
 
@@ -576,10 +575,18 @@ table {
     width: 100%;
 }
 
+td {
+    padding-left: 10px;
+}
+
 .latest-post article,
 .recent-post article {
     border: 0;
     padding-bottom: 0;
+}
+
+.blog-sidebar h2 {
+    color: #2a447e;
 }
 
 /*--------------------------------------------------------------
@@ -945,6 +952,7 @@ textarea {
 .author-info img {
     border: 1px solid;
     margin: 0 auto;
+    margin-right: 1px;
 }
 
 .author-info p {
@@ -959,7 +967,30 @@ textarea {
 --------------------------------------------------------------*/
 .sticky {
     display: block;
+    background-color: #2a447e;
+    border: 2px solid #65b6ff;
+    color: #f0f5f4;
+    padding: 10px;
 }
+
+.sticky a {
+    color: #f0f5f4;
+}
+
+.sticky a.moretag {
+    border: 1px solid #f0f5f4;
+    padding: 10px;
+    margin: 30px auto;
+    display: table;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.sticky a.moretag:hover {
+    background-color: #f0f5f4;
+    color: #2a447e;
+}
+
 
 .post,
 .page {
@@ -1046,6 +1077,12 @@ footer.entry-footer {
     border-top: 1px solid #f0f5f4;
     border-bottom: 1px solid #f0f5f4;
     padding: 10px 0;
+}
+
+.comment {
+    border-bottom: 1px solid #f0f5f4;
+    padding-bottom: 5px;
+    margin-top: 10px;
 }
 
 /*--------------------------------------------------------------

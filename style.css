@@ -6,7 +6,7 @@ Version: 1.0.0
 License: GNU General Public License v2 or later
 License URI: LICENSE
 Text Domain: celestine
-Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
+Tags: blog, photography, two-columns, custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready, stickyipost, right-sidebar
 
 This theme, like WordPress, is licensed under the GPL.
 celestine is based on Underscores https://underscores.me/, (C) 2012-2017 Automattic, Inc.
@@ -583,6 +583,10 @@ td {
 .recent-post article {
     border: 0;
     padding-bottom: 0;
+}
+
+.blog-sidebar h2 {
+    color: #2a447e;
 }
 
 /*--------------------------------------------------------------

@@ -94,11 +94,6 @@ get_header();
                     // Instantiate custom query
                     $custom_query = new WP_Query( $custom_query_args );
 
-                    // Pagination fix
-                    $temp_query = $wp_query;
-                    $wp_query   = NULL;
-                    $wp_query   = $custom_query;
-
                     // Output custom query loop
                     if ( $custom_query->have_posts() ) : ?>
                     <section class="recent-post">
@@ -130,11 +125,10 @@ get_header();
                     </section>
                     <?php endif;
                     wp_reset_postdata(); 
-                    $wp_query = NULL;
-                    $wp_query = $temp_query; ?>
+                    ?>
 
                     <?php
-                    // Show the rest of the page contents as edited by the user from the Wordpress console
+                    // Show the rest of the page contents as edited by the user from the WordPress console
 		while ( have_posts() ) :
 			the_post();
 
