@@ -142,42 +142,27 @@ function celestine_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'celestine_scripts' );
 
-/**
- * Get first image of a post. This will be used to display the first image of the post if a featured image is not given.
- 
-function get_first_image() {
-global $post, $posts;
-$first_image = '';
-ob_start();
-ob_end_clean();
-$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
-$first_image = $matches [1] [0];
-
-return $first_image;
-}*/
-
 
 // add sticky class on archive templates
-function sticky_archive_class( $classes ) {
+function celestine_sticky_archive_class( $classes ) {
     global $post;
     if ( is_sticky( $post->ID ) ) {
         if ( is_front_page() ) {
             $classes[] = 'sticky';
         }
     }
-
     return $classes;
 }
-add_filter( 'post_class', 'sticky_archive_class' );
+add_filter( 'post_class', 'celestine_sticky_archive_class' );
 
 /**
  * Replaces the excerpt "Read More" text by a link
  */
-function new_excerpt_more($more) {
+function celestine_new_excerpt_more($more) {
        global $post;
 	return '<a class="moretag" href="'. get_permalink($post->ID) . '"> Read the full article </a>';
 }
-add_filter('excerpt_more', 'new_excerpt_more');
+add_filter('excerpt_more', 'celestine_new_excerpt_more');
 
 /**
  * Implement the Custom Header feature.
@@ -202,11 +187,11 @@ require get_template_directory() . '/inc/customizer.php';
 /**
  * Remove the bult in color section as we are using a custom color scheme section
  */
-function my_customize_register() {     
+function celestine_remove_colors() {     
 global $wp_customize;
 $wp_customize->remove_section( 'colors' );  
 } 
-add_action( 'customize_register', 'my_customize_register', 11 );
+add_action( 'customize_register', 'celestine_remove_colors', 11 );
 
 /**
  * Register custom navigation walker
